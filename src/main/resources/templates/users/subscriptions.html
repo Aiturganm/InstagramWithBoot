@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscriptions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        h2 {
+            color: #262626;
+            margin-bottom: 20px;
+        }
+
+        .subscription {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subscription-info {
+            flex-grow: 1;
+        }
+
+        .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .fullname {
+            font-size: 14px;
+            color: #666;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #3897f0;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3578e5;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/api/users/profile}" method="get">
+        <button type="submit">Back</button>
+    </form>
+    <h2>Subscriptions</h2>
+    <div th:each="subscription:${allSubscriptions}" class="subscription">
+        <img class="img" th:src="${subscription.getUserInfo().getImage()}">
+        <div class="subscription-info">
+            <h4 class="username" th:text="${subscription.userName}"></h4>
+            <h6 class="fullname" th:text="${subscription.userInfo.getFullName()}"></h6>
+            <input type="hidden" th:name="id" th:value="${subscription.getId()}">
+        </div>
+    </div>
+</div>
+</body>
+</html>

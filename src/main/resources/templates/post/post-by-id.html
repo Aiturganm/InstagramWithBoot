@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .post {
+            position: fixed; /* фиксируем элемент на экране */
+            align-items: center;
+            justify-content: center;
+            height: 80%;
+            width: 50%; /* устанавливаем ширину 65% экрана */
+            background-color: rgba(255, 255, 255, 0.9); /* фон с прозрачностью */
+        }
+
+        body {
+            background-color: rgba(0, 0, 0, 0.1); /* цвет заднего фона с прозрачностью */
+        }
+
+        .post-image{
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+            aspect-ratio: 1 / 1; /* Ширина и высота поста равны */
+            margin-left: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="post">
+    <h5 th:text="${postById.title}"></h5>
+    <div class="post-images">
+        <div th:each="img : ${postById.getImages()}">
+            <img class="post-image" th:src="${img.getImageUrl()}" alt="post photo"> <a th:href="@{/api/post/updatePost(id=${postById.id})}">Update post</a>
+            <a th:href="@{/api/post/delete(id=${postById.id})}">Delete post</a>
+            <h6 th:text="${postById.getDescription()}"></h6>
+            <h5 class="post-created-at" th:text="${postById.createdAt}"></h5>
+            <h5>Likes:</h5>
+            <p th:text="${postById.likes.size()}"></p>
+            <h5>Comments:</h5>
+            <p th:text="${postById.comments.size()}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
